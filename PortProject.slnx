@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/1- Domain/">
+    <Project Path="PP.Domain/PP.Domain.csproj" />
+  </Folder>
+  <Folder Name="/2- Infra/">
+    <Project Path="PP.Infra/PP.Infra.csproj" />
+  </Folder>
+  <Folder Name="/3- Application/">
+    <Project Path="PP.Application/PP.Application.csproj" />
+  </Folder>
+  <Folder Name="/4- WebApp/">
+    <Project Path="PP.API/PP.API.csproj" />
+  </Folder>
+</Solution>
