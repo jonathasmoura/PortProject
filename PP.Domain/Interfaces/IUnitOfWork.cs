@@ -10,6 +10,7 @@ namespace PP.Domain.Interfaces
 	{
 		
 		IUserRepository Users { get; }
+		ICategoryRepository Categories { get; }
 
 		Task<int> SaveChangesAsync();
 	}
