@@ -8,15 +8,14 @@ using System.Threading.Tasks;
 
 namespace PP.Infra.DataContexts
 {
-	
+
 	public class DbPortContexts : DbContext
 	{
 		public DbPortContexts(DbContextOptions<DbPortContexts> options)
 			: base(options) { }
-
-		//public DbSet<Category> Categories { get; set; }
 		public DbSet<User> Users { get; set; }
 		public DbSet<RefreshToken> RefreshTokens { get; set; }
+		public DbSet<Category> Categories { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

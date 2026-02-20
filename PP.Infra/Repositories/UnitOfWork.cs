@@ -13,12 +13,13 @@ namespace PP.Infra.Repositories
 		private readonly DbPortContexts _dbPortContext;
 
 		public IUserRepository Users { get; }
+		public ICategoryRepository Categories { get; }
 
-		public UnitOfWork(IUserRepository userRepository, DbPortContexts dbPortContext)
+		public UnitOfWork(IUserRepository userRepository, DbPortContexts dbPortContext, ICategoryRepository categories)
 		{
 			_dbPortContext = dbPortContext;
 			Users = userRepository;
-			_dbPortContext = dbPortContext;
+			Categories = categories;
 		}
 
 		public async Task<int> SaveChangesAsync()

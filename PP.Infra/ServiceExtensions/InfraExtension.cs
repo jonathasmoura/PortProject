@@ -44,6 +44,7 @@ namespace PP.Infra.ServiceExtensions
 
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
 			services.AddScoped<IUserRepository, UserRepository>();
+			services.AddScoped<ICategoryRepository, CategoryRepository>();
 			services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
 			return services;

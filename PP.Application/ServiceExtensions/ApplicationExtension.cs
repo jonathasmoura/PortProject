@@ -17,8 +17,9 @@ namespace PP.Application.ServiceExtensions
 			services.AddScoped<IUserService, UserService>();
 			services.AddScoped<ITokenService, TokenService>();
 			services.AddScoped<IEmailSendService, EmailSendService>();
+			services.AddScoped<ICategoryService, CategoryService>();
 
-			
+
 			services.AddHttpContextAccessor();
 
 			return services;
