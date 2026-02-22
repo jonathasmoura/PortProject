@@ -17,7 +17,7 @@ namespace PP.API.Controllers
 		}
 
 		[HttpGet]
-		[Authorize]
+	
 		public async Task<IActionResult> GetCategories()
 		{
 			try

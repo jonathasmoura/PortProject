@@ -11,4 +11,8 @@
   <Folder Name="/4- WebApp/">
     <Project Path="PP.API/PP.API.csproj" />
   </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="docker-compose.yaml" />
+    <File Path="Dockerfile" />
+  </Folder>
 </Solution>
