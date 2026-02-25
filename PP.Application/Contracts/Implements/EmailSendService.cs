@@ -1,10 +1,13 @@
-﻿using Microsoft.Extensions.Options;
+﻿using MailKit.Net.Smtp;
+using MailKit.Security;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using MimeKit;
 using PP.Application.Contracts.Interfaces;
 using PP.Application.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,26 +26,28 @@ namespace PP.Application.Contracts.Implements
 		{
 			try
 			{
-				using (var client = new SmtpClient(_emailConfig.SmtpServer))
+				
+				var msg = new MimeMessage();
+				var bb = new BodyBuilder();
+
+				bb.TextBody = "This is a test email.";
+				bb.HtmlBody = emailRequestDto.Body;
+
+				msg.From.Add(new MailboxAddress(_emailConfig.FromName, _emailConfig.FromAddress));
+				msg.To.Add(new MailboxAddress("User", emailRequestDto.To));
+				msg.Subject = emailRequestDto.Subject;
+				msg.Body = bb.ToMessageBody();
+
+
+
+				using (var smtp = new SmtpClient())
 				{
-					var mailMessage = new MailMessage()
-					{
-						From = new MailAddress(_emailConfig.FromAddress, _emailConfig.FromName),
-						Subject = emailRequestDto.Subject,
-						Body = emailRequestDto.Body,
-						IsBodyHtml = true
-					};
-					mailMessage.To.Add(emailRequestDto.To);
+					await smtp.ConnectAsync(_emailConfig.SmtpServer, 
+											_emailConfig.SmtpPort,
+											_emailConfig.UseSsl ? SecureSocketOptions.StartTls : SecureSocketOptions.None);
 
-
-					client.Host = _emailConfig.SmtpServer;
-					client.Port = _emailConfig.SmtpPort;
-					client.UseDefaultCredentials = false;
-					client.Credentials = new System.Net.NetworkCredential(_emailConfig.SmtpUsername, _emailConfig.SmtpPassword);
-					client.EnableSsl = true;
-
-					await client.SendMailAsync(mailMessage);
-
+					await smtp.SendAsync(msg);
+					await smtp.DisconnectAsync(true);
 				}
 			}
 			catch (Exception ex)
