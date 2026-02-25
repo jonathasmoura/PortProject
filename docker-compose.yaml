@@ -6,11 +6,15 @@ services:
       dockerfile: Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - EmailSettings__SmtpServer=mailpit
+      - EmailSettings__SmtpPort=1025
+      - EmailSettings__UseSsl=false
     ports:
       - "8080:8080"
       - "8081:8081"
     depends_on:
      - database
+     - mailpit
     networks:
      - portnetwork
     restart: on-failure
@@ -27,11 +31,22 @@ services:
      - sqlvolume:/var/opt/mssql
     networks:
      - portnetwork
+  
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: mailpit
+    ports:
+      - "8025:8025" # UI
+      - "1025:1025" # SMTP
+    volumes:
+      - mailpit-data:/data
+    restart: unless-stopped
+    networks:
+    - portnetwork
 
 networks:
    portnetwork:
    
 volumes:
    sqlvolume:
-   
- 
+   mailpit-data:
